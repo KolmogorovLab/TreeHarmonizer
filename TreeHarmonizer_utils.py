@@ -6,8 +6,7 @@ import intervaltree as it
 
 all_sublines = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 all_sublines_with_c_char = ['C' + str(x) for x in all_sublines]
-chromosomes_without_13 = [str(x) for x in range(1, 20) if x != 13]
-chromosomes_with_13 = [str(x) for x in range(1, 20)]
+autosomes = [str(x) for x in range(1, 20)]
 
 def read_vcf_deepvariant(path, sample='default'):
     with open(path, 'r') as f:
@@ -64,40 +63,57 @@ def write_vcf(df, path, input_header):
 def keep_rows_by_values(df, col, values):
     return df[df[col].isin(values)]
 
-def generate_merged_df(caller_name, caller_path, without_chromosome_13=False):
-    caller_path.strip("/")
+def generate_merged_df(caller_path, predefined_sample_list=None):
+    caller_path = caller_path.strip("/")
     caller_path = "/" + caller_path
-    #print(caller_path)
+ 
     all_caller_vcfs = []
-    for x in all_sublines:
-        if caller_name == "dv_new":
-            caller, vcf_header = read_vcf_deepvariant(caller_path + '/C' + str(x) + '/C' + str(x) + '.vcf')
-        elif caller_name == "dv":
-            caller, vcf_header = read_vcf_deepvariant(caller_path + '/C' + str(x) + '.vcf')
-        elif caller_name == "cs":
-            caller, vcf_header = read_vcf_deepvariant(caller_path + '/C' + str(x) + '/C' + str(x) + '_pass.vcf')
+    sample_list = []
+
+    # If using a predefined sample list, ensure all samples are accounted for
+    if predefined_sample_list is not None:
+        sample_list = predefined_sample_list
+        for sample in sample_list:
+            if not os.path.isdir(caller_path + '/' + sample):
+                raise ValueError("Sample directory not found: " + caller_path + '/' + sample)
+
+    # If general sample structure, assume each folder inside caller path is a sample name, except those that start with "_"
+    # Assume within each folder there is a VCF file names [sample_name].vcf
+
+    else:
+        # List directories that do not start with '_'
+        sample_list = [
+            d for d in os.listdir(caller_path)
+            if os.path.isdir(os.path.join(caller_path, d)) and not d.startswith('_')
+        ]
+        # Remove trailing slashes and keep only directory names
+        sample_list = [os.path.basename(os.path.normpath(s)) for s in sample_list]
+        # Make sure VCFs exist for each sample, and that there is at least one sample
+        if len(sample_list) == 0:
+            raise ValueError("No sample directories found in the provided caller path.")
+        for sample in sample_list:
+            if not os.path.isdir(caller_path + '/' + sample):
+                raise ValueError("Sample directory not found: " + caller_path + '/' + sample)
+            if not os.path.isfile(caller_path + '/' + sample + '/' + sample + '.vcf'):
+                raise ValueError("VCF file not found for sample: " + caller_path + '/' + sample + '/' + sample + '.vcf')
+
+    for sample in sample_list:
+        caller, vcf_header = read_vcf_deepvariant(caller_path + '/' + sample + '/' + sample + '.vcf', sample=sample)
         caller['CHROM'] = caller.CHROM.astype(str)
         caller['POS'] = caller.POS.astype(str)
         caller['REF'] = caller.REF.astype(str)
         caller['ALT'] = caller.ALT.astype(str)
-        if without_chromosome_13:
-            caller = keep_rows_by_values(caller, 'CHROM', chromosomes_without_13)
-        else:
-            caller = keep_rows_by_values(caller, 'CHROM', chromosomes_with_13)
+        caller = keep_rows_by_values(caller, 'CHROM', autosomes)
         caller['KEY'] = caller['CHROM'].astype(str) + ":" + caller['POS'].astype(str) + ":" + caller['REF'].astype(str) + ":" + caller['ALT'].astype(str)
         caller.drop(columns=['ID', 'POS', 'CHROM', 'FILTER', 'INFO', 'ALT', 'FORMAT', 'QUAL', 'REF'], inplace=True)
-
         all_caller_vcfs.append(caller)
 
-    caller_merged = reduce(lambda  left,right: pd.merge(left,right,on=['KEY'], how='outer'), all_caller_vcfs)
+    caller_merged = reduce(lambda left, right: pd.merge(left, right, on=['KEY'], how='outer'), all_caller_vcfs)
 
-    return caller_merged
+    return caller_merged, sample_list
 
-def generate_severus_df(severus_path, without_chromosome_13=False, simple_name=False):
-    if without_chromosome_13:
-        str_chrom_list_to_use = chromosomes_without_13
-    else:
-        str_chrom_list_to_use = chromosomes_with_13
+def generate_severus_df(severus_path, simple_name=False):
+    str_chrom_list_to_use = autosomes
 
     if simple_name:
         sev_vcf, header = read_vcf_severus(severus_path, simple_name=True)
