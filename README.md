@@ -4,6 +4,8 @@ TreeHarmonizer is a utility that is used to place called variants onto a pre-exi
 
 As of this verion 1.0, TreeHarmonizer works as a jupyter notebook, designed for the paper "Long-read sequencing of single cell-derived melanoma subclones reveals divergent and parallel genomic and epigenomic evolutionary trajectories", by Liu & Goretsky, et al. 
 
+Preprint available on [biorxiv.](https://www.biorxiv.org/content/10.1101/2025.08.28.672865v1)
+
 It is being actively developed to serve as a standalone utility for multiple variant calling inputs and trees alike.
 
 ## Installation (via Conda environment creation)
