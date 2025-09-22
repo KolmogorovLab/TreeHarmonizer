@@ -35,7 +35,7 @@ Versions listed are those that were tested to be stable and work together.
 
 ## Quick Run
 
-An example dataset is provided, with the input parameters pre-populated with the relative paths. This dataset consists of chromosome 1 only of the 23 sublines used by "Long-read sequencing of single cell-derived melanoma subclones reveals divergent and parallel genomic and epigenomic evolutionary trajectories", by Liu & Goretsky, et al. The full dataset can be found on [Zenodo](https://doi.org/10.5281/zenodo.16883901) All cells can be executed without any changes.
+An example dataset is provided, with the input parameters pre-populated with the relative paths. This dataset consists of chromosome 1 only of the 23 sublines used by "Long-read sequencing of single cell-derived melanoma subclones reveals divergent and parallel genomic and epigenomic evolutionary trajectories", by Liu & Goretsky, et al. The full dataset can be found on [Zenodo](https://doi.org/10.5281/zenodo.16883901). All cells can be executed without any changes.
 
 * Expected runtime on chr1 example dataset - ~2 minutes
 * Expected runtime on the entire mouse melanoma cell line dataset is ~10 minutes.
