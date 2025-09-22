@@ -64,6 +64,11 @@ def keep_rows_by_values(df, col, values):
     return df[df[col].isin(values)]
 
 def generate_merged_df(caller_path, predefined_sample_list=None):
+
+    # If caller path is a relative path, make it absolute
+    if not os.path.isabs(caller_path):
+        caller_path = os.path.abspath(caller_path)
+
     caller_path = caller_path.strip("/")
     caller_path = "/" + caller_path
  
@@ -90,6 +95,7 @@ def generate_merged_df(caller_path, predefined_sample_list=None):
         sample_list = [os.path.basename(os.path.normpath(s)) for s in sample_list]
         # Make sure VCFs exist for each sample, and that there is at least one sample
         if len(sample_list) == 0:
+            print("Caller path: ", caller_path)
             raise ValueError("No sample directories found in the provided caller path.")
         for sample in sample_list:
             if not os.path.isdir(caller_path + '/' + sample):
@@ -134,6 +140,9 @@ from ete3 import Tree
 def get_tree_data(newick_tree_string="(((((((((((C20)O20,(C7)O7)N22,(C8)O8)N21,(C16)O16)N20,(C11)O11)N19,((C18)O18,(C15)O15)N18)N17,(C13)O13)N16,((((C21)O21,(C6)O6)N15,(C24)O24)N14,(C9)O9)N13)N12,((((C1)O1,(C22)O22)N11,(C4)O4)N10,(C5)O5)N9)N8,(((C23)O23,(((C10)O10,(C12)O12)N6,((C3)O3,(C14)O14)N7)N5)N4,((C19)O19,(C17)O17)N3)N2)N1)N0;", non_original=False):
 
     imported_tree = Tree(newick_tree_string, format=1)
+
+    if newick_tree_string != "(((((((((((C20)O20,(C7)O7)N22,(C8)O8)N21,(C16)O16)N20,(C11)O11)N19,((C18)O18,(C15)O15)N18)N17,(C13)O13)N16,((((C21)O21,(C6)O6)N15,(C24)O24)N14,(C9)O9)N13)N12,((((C1)O1,(C22)O22)N11,(C4)O4)N10,(C5)O5)N9)N8,(((C23)O23,(((C10)O10,(C12)O12)N6,((C3)O3,(C14)O14)N7)N5)N4,((C19)O19,(C17)O17)N3)N2)N1)N0;":
+        non_original = True
 
     # If running the tree validation testing
     root_node_name = "N0"
