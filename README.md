@@ -2,7 +2,7 @@
 
 TreeHarmonizer is a utility that is used to place called variants onto a pre-existing phylogenetic tree, allowing for visualization of variant trajectories and evolutionary progression. TreeHarmonizer was developed with single nucleotide (SNV), structural (SV), and copy number (CNA) variants in mind, allowing for placement of each variant type.
 
-As of version 0.1, TreeHarmonizer works as a jupyter notebook, designed for the paper "Long-read sequencing of single cell-derived melanoma subclones reveals divergent and parallel genomic and epigenomic evolutionary trajectories", by Liu & Goretsky, et al. 
+As of version 0.1.0, TreeHarmonizer works as a jupyter notebook, designed for the paper "Long-read sequencing of single cell-derived melanoma subclones reveals divergent and parallel genomic and epigenomic evolutionary trajectories", by Liu & Goretsky, et al. 
 
 Preprint available on [biorxiv.](https://www.biorxiv.org/content/10.1101/2025.08.28.672865v1) \
 Unaligned BAM files available on [NCBI SRA](https://www.ncbi.nlm.nih.gov/bioproject/1307171) \
