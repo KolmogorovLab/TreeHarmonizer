@@ -219,7 +219,7 @@ An example dataset is provided in the `example_data/` directory, containing chro
 # Activate the environment
 conda activate th_env
 
-# Run with all variant types (using tree file path)
+# Run with all variant types (using tree file path), regenotype only using SVs.
 python th_main.py \
     --tree-newick ./example_data/original_tree.nwk \
     --reference-species mm10 \
@@ -227,21 +227,16 @@ python th_main.py \
     --snv-path ./example_data/snv/ \
     --cna-path ./example_data/cna/ \
     --sv-path ./example_data/sv/severus_chr1.vcf \
+    --regenotype-with-sv-only \
     --output-path ./th_output_example/
 
-# Run SNV placement only (faster)
+# Run SNV placement only without regenotyping
 python th_main.py \
     --tree-newick ./example_data/original_tree.nwk \
     --reference-species mm10 \
     --chromosomes 1 \
     --snv-path ./example_data/snv/ \
-    --output-path ./th_output_example/
-
-# Alternative: pass newick string directly
-python th_main.py \
-    --tree-newick "(A,B,(C,D));" \
-    --reference-species mm10 \
-    --snv-path ./example_data/snv/ \
+    --disable-regenotyping \
     --output-path ./th_output_example/
 ```
 
@@ -252,7 +247,8 @@ The example run will produce:
 - `th_output_example/snv/unplaced_snv_variants.tsv` - SNV variants that did not meet placement criteria
 - `th_output_example/snv/exclusive/` - Per-node exclusive VCF files
 - `th_output_example/snv/cumulative/` - Per-node cumulative VCF files
-- Similar output for SV and CNA if those paths are provided
+- **Similar output for SV per the general output structure**
+- **Similar output for CNAs per the general output structure**
 
 ### Expected Runtime
 
