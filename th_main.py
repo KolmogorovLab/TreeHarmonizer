@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+
 from sv import sv_placement_runner
 from snv import snv_placement_runner
 from cna import cna_placement_runner
@@ -96,7 +97,7 @@ def main():
     #args = parser.parse_args('--snv-path ./data/snv/ --cna-path ./data/cna/ --sv-path ./data/sv/variants.vcf --fn-rate 0.1 --tree-newick "(A,B,(C,D));"'.split())
     args = parser.parse_args()
 
-    print("args:", args)
+    #print("args:", args)
 
     # First test - Tree newick string must be provided, otherwise nothing can be done
     if not args.tree_newick:

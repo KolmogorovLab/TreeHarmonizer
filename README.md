@@ -35,7 +35,7 @@ TreeHarmonizer was tested with Python 3.6.15 with pandas 1.3.3 for both the note
 ## Usage
 
 ```bash
-python th_main.py --tree-newick <newick_string_or_file> --reference-species <species> [required-path-arguments] [options]
+python run_th.py --tree-newick <newick_string_or_file> --reference-species <species> [required-path-arguments] [options]
 ```
 
 ## Required Arguments
@@ -59,7 +59,7 @@ For non-standard genomes or species other than mouse/human, provide a UCSC-forma
 
 ```bash
 # Example: using a custom chromosome sizes file
-python th_main.py \
+python run_th.py \
     --tree-newick ./my_tree.nwk \
     --reference-species /path/to/my_genome.chrom.sizes \
     --snv-path ./snv_data/ \
@@ -220,7 +220,7 @@ An example dataset is provided in the `example_data/` directory, containing chro
 conda activate th_env
 
 # Run with all variant types (using tree file path), regenotype only using SVs.
-python th_main.py \
+python run_th.py \
     --tree-newick ./example_data/original_tree.nwk \
     --reference-species mm10 \
     --chromosomes 1 \
@@ -231,7 +231,7 @@ python th_main.py \
     --output-path ./th_output_example/
 
 # Run SNV placement only without regenotyping
-python th_main.py \
+python run_th.py \
     --tree-newick ./example_data/original_tree.nwk \
     --reference-species mm10 \
     --chromosomes 1 \
