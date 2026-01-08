@@ -257,6 +257,21 @@ The example run will produce:
 
 Runtimes may vary depending on system specifications.
 
+### Legacy notebook version (deprecated)
+
+#### Installation Via Conda (Recommended)
+
+```bash
+git clone git@github.com:KolmogorovLab/TreeHarmonizer.git
+cd TreeHarmonizer
+conda env create -f notebook_environment.yml -n tree_harmonizer_nb
+conda activate tree_harmonizer_nb
+```
+
+#### Running
+
+* All notebooks may be run as is, input paths are pre-populated. Input and output for this version is significantly more limited than the standard version and is considered deprecated.
+
 ## In Development
 
 - Additional input support for other SV callers.
