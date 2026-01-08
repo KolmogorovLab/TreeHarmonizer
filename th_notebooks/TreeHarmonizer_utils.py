@@ -3,6 +3,7 @@ import io
 from functools import reduce
 import os
 import intervaltree as it
+import platform
 
 all_sublines = [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 all_sublines_with_c_char = ['C' + str(x) for x in all_sublines]
@@ -56,7 +57,15 @@ def write_vcf(df, path, input_header):
     with open(path, 'w') as vcf:
         vcf.write(input_header)
     df.to_csv(path, sep="\t", mode='a', index=False)
-    os.system("sed -i 's/CHROM/#CHROM/g' " + path)
+
+    # Determine which system we are currently on, macOS or Linux, and run the appropriate sed command to replace 'CHROM' with '#CHROM'
+    curren_system = platform.system()
+    if curren_system == "Linux":
+        os.system("sed -i 's/CHROM/#CHROM/g' " + path)
+    elif curren_system == "Darwin":  # macOS
+        os.system("sed -i '' 's/CHROM/#CHROM/g' " + path)
+        
+    #os.system("sed -i 's/CHROM/#CHROM/g' " + path)
     # MACOS FORMAT REQUIRES '' BEFORE THE STRING, CHANGE ON LINUX SERVER
     #os.system("sed -i '' 's/CHROM/#CHROM/g' " + path)
 

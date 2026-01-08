@@ -1,0 +1,14 @@
+name: th_env
+channels:
+  - etetoolkit
+  - conda-forge
+  - defaults
+dependencies:
+  - python==3.12
+  - ete3
+  - pandas
+  - ca-certificates  
+  - pip
+  - pip:
+    - intervaltree==3.1.0
+
