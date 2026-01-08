@@ -247,7 +247,7 @@ def snv_placement_runner(snv_path, tree_newick, tree_metadata=None, output_path=
         vcf_metadata=vcf_metadata, command_string=command_string, version=version
     )
 
-    print("\nSNV placement complete!")
+    #print("\nSNV placement complete!")
 
     return {
         'marked_df': MARKED_dv,
@@ -727,7 +727,7 @@ def apply_severus_only_regenotyping(MARKED_dv, min_support_req, sample_list, imp
     # This threshold prevents a variant originally in 3 samples from being placed
     # in a clade of 10+ samples just because of SV evidence
     def tree_shift_helper_severus(row):
-        if pd.notna(row['REGENO_COMBINED_SUBLINES_SEVERUS_ONLY']):
+        if isinstance(row['REGENO_COMBINED_SUBLINES_SEVERUS_ONLY'], list):
             if len(row['REGENO_COMBINED_SUBLINES_SEVERUS_ONLY']) > (len(row['DV_SUBLINES']) * 2):
                 return True
         return False
@@ -822,7 +822,7 @@ def apply_cna_only_regenotyping(MARKED_dv, min_support_req, sample_list, importe
 
     # Check for dramatic shift - same 2x threshold as Severus mode
     def tree_shift_helper_cna(row):
-        if pd.notna(row['REGENO_COMBINED_SUBLINES_CN_1_0_ONLY']):
+        if isinstance(row['REGENO_COMBINED_SUBLINES_CN_1_0_ONLY'], list):
             if len(row['REGENO_COMBINED_SUBLINES_CN_1_0_ONLY']) > (len(row['DV_SUBLINES']) * 2):
                 return True
         return False

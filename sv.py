@@ -299,7 +299,8 @@ def sv_placement_runner(sv_path, tree_newick, tree_metadata=None, output_path=No
     #print("\nPlacement threshold results:")
     #print(sev_df['minimum_subline_support_threshold_met_severus'].value_counts())
 
-    # Create output files of placed and unplaced variants
+    # Create output directory and files of placed and unplaced variants
+    subprocess.run(['mkdir', '-p', f"{output_path}/sv"])
     placed_severus_df = sev_df[
         sev_df['minimum_subline_support_threshold_met_severus'] == True
     ].copy()

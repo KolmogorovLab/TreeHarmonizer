@@ -953,7 +953,7 @@ def cna_placement_runner(cna_path, tree_newick, tree_metadata=None, output_path=
         subline_amp_df, subline_loss_df, avg_amp, avg_loss
     )
 
-    print(f"CNA placement complete. Output written to: {os.path.join(output_path, 'cna')}")
+    print(f"Output written to: {os.path.join(output_path, 'cna')}")
 
     return {
         'exclusive_amp': exclusive_amp,
