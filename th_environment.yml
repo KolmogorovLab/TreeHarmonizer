@@ -1,4 +1,4 @@
-name: th_env
+name: tree_harmonizer
 channels:
   - etetoolkit
   - conda-forge
