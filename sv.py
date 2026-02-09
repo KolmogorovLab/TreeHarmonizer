@@ -212,9 +212,14 @@ def sv_placement_runner(sv_path, tree_newick, tree_metadata=None, output_path=No
             severus['ALT'].str.contains(pattern_regex, regex=True, na=False)
         ].copy()
 
-        # Also remove the paired breakend entry (change _1 to _2 in ID)
+        # Also remove the paired breakend entry (swap _1 <-> _2 in ID)
         ids_to_remove = sev_excluded_endpoint['ID'].tolist()
-        id_pairs_to_remove = [x[:-1] + "2" for x in ids_to_remove if x.endswith("1")]
+        id_pairs_to_remove = []
+        for x in ids_to_remove:
+            if x.endswith("1"):
+                id_pairs_to_remove.append(x[:-1] + "2")
+            elif x.endswith("2"):
+                id_pairs_to_remove.append(x[:-1] + "1")
         all_ids_to_remove = list(set(ids_to_remove + id_pairs_to_remove))
         severus = severus[~severus['ID'].isin(all_ids_to_remove)].copy()
 
