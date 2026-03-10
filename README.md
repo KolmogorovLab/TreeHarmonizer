@@ -117,12 +117,12 @@ chr1,3000001,195471970,3
 
 ### Variant Placement Control
 
-By default, placement is performed on all variant types that are provided. In order to limit placement to select variant types, use one of the following arguments.
+By default, placement is performed on all variant types that are provided. In order to limit placement to select variant types, use one of the following arguments. *We note that CNA "placement" currently produces summary statistics with respect to amplifications and losses per node, rather than being marked as individual events and placed. True placement of CNAs will be included in future updates. See [Output](#output) and the preprint [bioRxiv](https://www.biorxiv.org/content/10.1101/2025.08.28.672865v1) for more details.*
 
 | Argument | Default | Description |
 |----------|---------|-------------|
 | `--no-snv-placement` | False | Skip SNV placement even if path is provided |
-| `--no-cna-placement` | False | Skip CNA placement even if path is provided |
+| `--no-cna-placement` | False | Skip CNA placement (summarization) even if path is provided |
 | `--no-sv-placement` | False | Skip SV placement even if path is provided |
 
 ### Sample Selection
