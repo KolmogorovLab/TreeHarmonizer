@@ -14,7 +14,7 @@ TreeHarmonizer was originally developed for the paper "Long-read sequencing of s
 ### Via Conda (Recommended)
 
 ```bash
-git clone git@github.com:KolmogorovLab/TreeHarmonizer.git
+git clone https://github.com/KolmogorovLab/TreeHarmonizer.git
 cd TreeHarmonizer
 conda env create -f th_environment.yml -n tree_harmonizer
 conda activate tree_harmonizer
@@ -84,8 +84,8 @@ TreeHarmonizer supports two CNA file formats with auto-detection:
 #### Directory Structure
 
 CNA files can be organized in either structure (checked in order):
-1. **Simplified**: `{cna_path}/{sample}/{sample}.bed`
-2. **Legacy (Wakhan)**: `{cna_path}/{sample}/bed_output/{sample}_copynumbers_segments.bed`
+1. **Generic**: `{cna_path}/{sample}/{sample}.bed`
+2. **Wakhan (Legacy)**: `{cna_path}/{sample}/bed_output/{sample}_copynumbers_segments.bed`
 
 #### File Formats
 
@@ -129,7 +129,7 @@ By default, placement is performed on all variant types that are provided. In or
 
 | Argument | Description |
 |----------|-------------|
-| `--sample-list` | Space-separated list of sample names to include. By default, all samples found in data directories are used. <br>**Note:** *this argument is intended for use if you have samples / folders unrelated to the tree samples or project at hand within the input directories. Not including samples that exist on the tree can lead to undefined behavior and placement.* **It is recommended that if the sample-list given does not represent all samples on the newick string, that the tree supplied be modified to reflect this change.** Example: `--sample-list C1 C2 C3` or `--sample-list C1,C2,C3` |
+| `--sample-list` | Space-separated list of sample names to include. By default, all samples found in data directories are used. Example: `--sample-list C1 C2 C3` or `--sample-list C1,C2,C3`<br>**Note:** *This argument is intended for use if you have samples / folders unrelated to the tree samples or project at hand within the input directories. Not including samples that exist on the tree can lead to undefined behavior and placement.* **It is recommended that if the sample-list given does not represent all samples on the newick string, that the tree supplied be modified to reflect this change.** |
 
 ### Chromosome Selection
 
@@ -200,7 +200,7 @@ TreeHarmonizer generates the following output structure:
 
 **Exclusive VCFs**: Contain variants that arose specifically at each tree node (branching point).
 
-**Cumulative VCFs**: Contain all variants present in each lineage (node variants plus all descendant node variants).
+**Cumulative VCFs**: Contain all variants present in each lineage (All variants beginning from the root up to and including the node variants).
 
 ## Quick Run with Example Data
 
@@ -247,8 +247,8 @@ The example run will produce:
 - `th_output_example/snv/unplaced_snv_variants.tsv` - SNV variants that did not meet placement criteria
 - `th_output_example/snv/exclusive/` - Per-node exclusive VCF files
 - `th_output_example/snv/cumulative/` - Per-node cumulative VCF files
-- **Similar output for SV per the general output structure**
-- **Similar output for CNAs per the general output structure**
+- **Similar output for SV per the described output structure**
+- **Summary statistics output for CNAs per the described output structure**
 
 ### Expected Runtime
 
@@ -262,7 +262,7 @@ Runtimes may vary depending on system specifications.
 #### Installation Via Conda (Recommended)
 
 ```bash
-git clone git@github.com:KolmogorovLab/TreeHarmonizer.git
+git clone https://github.com/KolmogorovLab/TreeHarmonizer.git
 cd TreeHarmonizer
 conda env create -f notebook_environment.yml -n tree_harmonizer_nb
 conda activate tree_harmonizer_nb
